@@ -26,12 +26,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas geopandas matplotlib requests
 
-      # 4. Run the mapping script
+      # 4. Download shapefile
+      - name: Download ZCTA shapefile
+        run: |
+          curl -L "https://www2.census.gov/geo/tiger/TIGER2022/ZCTA520/tl_2022_us_zcta520.zip" -o tl_2022_us_zcta520.zip
+          unzip tl_2022_us_zcta520.zip
+
+      # 5. Run the mapping script
       - name: Run NEF mapping script
         run: |
           python nef_project_v_2.py
 
-      # 5. Upload generated map images as workflow artifacts
+      # 6. Upload generated map images as workflow artifacts
       - name: Upload map images
         uses: actions/upload-artifact@v4
         with:
